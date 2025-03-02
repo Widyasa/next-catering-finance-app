@@ -14,17 +14,76 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model BookCategories {
-  id        String   @id @default(uuid())
-  name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  books     Books[]
+model ProductCategories {
+  id        String     @id @default(uuid())
+  name      String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  products  Products[]
 }
 
-model Books {
-  id          String         @id @default(uuid())
-  name        String         @unique
+model Products {
+  id          String            @id @default(uuid())
+  name        String            @unique
+  price       Int
+  description String            @db.Text
   category_id String
-  category    BookCategories @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  category    ProductCategories @relation(fields: [category_id], references: [id])
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  OrderDetail OrderDetail[]
+}
+
+model Users {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+  pending
+  confirmed
+  canceled
+  finished
+}
+
+model Orders {
+  id               String        @id @default(uuid())
+  date             String
+  customer_name    String
+  customer_phone   String
+  customer_address String        @db.Text
+  total_price      Int
+  total_income     Int
+  status           OrderStatus   @default(pending)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  orderDetails     OrderDetail[]
+}
+
+model OrderDetail {
+  id         String   @id @default(uuid())
+  order_id   String
+  product_id String
+  quantity   Int
+  price      Int
+  order      Orders   @relation(fields: [order_id], references: [id])
+  product    Products @relation(fields: [product_id], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model OrderOutcome {
+  id          String   @id @default(uuid())
+  order_id    String
+  name        String
+  description String   @db.Text
+  date        String
+  price       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
