@@ -5,7 +5,7 @@ import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 const links = [
     { title: 'Dashboard', route: '/dashboard', icon:<DashboardOutlinedIcon/>},
-    { title: 'Book Category', route: '/dashboard/book-category', active: '/dashboard/book-category', icon:<CategoryOutlinedIcon/>},
+    { title: 'Product Category', route: '/dashboard/product-category', active: '/dashboard/product-category', icon:<CategoryOutlinedIcon/>},
     { title: 'Books', route: '/dashboard/books', active: '/dashboard/books',icon: <BookOutlinedIcon/>},
 ]
 export default function Sidebar(){

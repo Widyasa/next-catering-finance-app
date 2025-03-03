@@ -1,17 +1,17 @@
 "use client"
 import {useForm} from "react-hook-form";
 import {z} from "zod";
-import {createBookCategorySchema} from "@/requests/book-category/create";
+import {createProductCategorySchema} from "@/requests/product-category/create";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
-import {bookCategoryStore} from "@/stores/bookCategoryStore";
+import {productCategoryStore} from "@/stores/productCategoryStore";
 import {useEffect} from "react";
 
-export default function DetailBookCategory() {
-    const {category, loadingDetail} = bookCategoryStore()
-    const form = useForm<z.infer<typeof createBookCategorySchema>>({
-        resolver: zodResolver(createBookCategorySchema),
+export default function DetailProductCategory() {
+    const {category, loadingDetail} = productCategoryStore()
+    const form = useForm<z.infer<typeof createProductCategorySchema>>({
+        resolver: zodResolver(createProductCategorySchema),
         defaultValues: {
             name: category.name
         }

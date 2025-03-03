@@ -1,4 +1,5 @@
-import {createCategory, getCategories} from "@/services/bookCategory";
+import {createCategory, getCategories} from "@/services/productCategory";
+import { Prisma } from "@prisma/client";
 import {NextRequest, NextResponse} from "next/server";
 export async function GET (req:NextRequest) {
     try {
@@ -24,6 +25,9 @@ export async function POST (req:NextRequest) {
         return NextResponse.json(category)
     } catch (e) {
         if (e instanceof Error) {
+            if(e instanceof Prisma.PrismaClientKnownRequestError) {
+                return NextResponse.json('Category is already taken', {status: 400});
+            }
             return NextResponse.json(e.message, {status: 500});
         }
         return NextResponse.json("An unexpected error occurred", {status: 500});

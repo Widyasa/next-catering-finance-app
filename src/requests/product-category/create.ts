@@ -1,6 +1,5 @@
 import {z} from "zod";
-
-export const createBookCategorySchema = z.object({
+export const createProductCategorySchema = z.object({
     name: z.string().min(3, {
         message: "name must have at least 3 characters"
     }).nonempty({

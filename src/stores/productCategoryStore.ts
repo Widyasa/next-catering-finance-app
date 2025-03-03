@@ -1,14 +1,16 @@
 import {create} from "zustand/react";
-import {BookCategory, BookCategoryState} from "@/interface/BookCategory";
+import {ProductCategory, ProductCategoryAction, ProductCategoryState} from "@/types/ProductCategory";
 import {AxiosInstance} from "@/utils/axios";
-type SetState = (state: Partial<BookCategoryState>) => void;
+import {ClientError} from "@/types/global";
+import {toast} from "sonner";
+type SetState = (state: Partial<ProductCategoryState>) => void;
 
-const handleError = (set: SetState, error: unknown) => {
-    const message = error instanceof Error ? error.message : "An unexpected error occurred";
-    set({ error: message });
+const handleError = (set: SetState, error:unknown) => {
+    const message = error as ClientError
+    toast(message.response.data)
 };
 
-export const bookCategoryStore = create<BookCategoryState>((set, get) => ({
+export const productCategoryStore = create<ProductCategoryState & ProductCategoryAction>((set, get) => ({
     categories: [],
     category: {id: "", name: ""},
     search: "",
@@ -22,7 +24,7 @@ export const bookCategoryStore = create<BookCategoryState>((set, get) => ({
     id: "",
     message: '',
     changeStatus: (status) => set(() => ({status : status})),
-    getBookCategory: async (searchData?:string, pageSelected?:number) => {
+    getProductCategory: async (searchData?:string, pageSelected?:number) => {
         try {
             set ({
                 loading:true,
@@ -31,7 +33,7 @@ export const bookCategoryStore = create<BookCategoryState>((set, get) => ({
             })
             const {search, page} = get()
             const params = { page, ...(search && { search }) };
-            const res = await AxiosInstance.get(`/api/book-category`, { params });
+            const res = await AxiosInstance.get(`/api/product-category`, { params });
             set({
                 categories: res.data.data,
                 totalData: res.data.meta.total
@@ -47,10 +49,10 @@ export const bookCategoryStore = create<BookCategoryState>((set, get) => ({
             })
         }
     },
-    getBookCategoryById: async (id:string) => {
+    getProductCategoryById: async (id:string) => {
         try {
             set({loadingDetail:true})
-            const res = await AxiosInstance.get(`/api/book-category/${id}`)
+            const res = await AxiosInstance.get(`/api/product-category/${id}`)
             set({category: res.data})
         } catch (e) {
             handleError(set, e)
@@ -58,18 +60,19 @@ export const bookCategoryStore = create<BookCategoryState>((set, get) => ({
             set({loadingDetail:false})
         }
     },
-    createBookCategory: async (data:BookCategory) => {
+    createProductCategory: async (data:ProductCategory) => {
         try {
             set({loadingCrud:true})
-            const res = await AxiosInstance.post(`/api/book-category`, {
+            const res = await AxiosInstance.post(`/api/product-category`, {
                 data : {
                     ...data
                 }
             })
-            await get().getBookCategory()
+            console.log(res)
+            await get().getProductCategory()
             set({status: res.status})
             if (res.status == 200) {
-                set({message: 'Create Book Category Success'})
+                set({message: 'Create Product Category Success'})
             }
         } catch (e) {
             handleError(set, e)
@@ -77,18 +80,18 @@ export const bookCategoryStore = create<BookCategoryState>((set, get) => ({
             set({loadingCrud:false})
         }
     },
-    updateBookCategory: async (id:string, data:BookCategory) => {
+    updateProductCategory: async (id:string, data:ProductCategory) => {
         try {
             set({loadingCrud:true})
-            const res = await AxiosInstance.patch(`/api/book-category/${id}`, {
+            const res = await AxiosInstance.patch(`/api/product-category/${id}`, {
                 data: {
                     ...data
                 },
             })
-            await get().getBookCategory()
+            await get().getProductCategory()
             set({status: res.status})
             if (res.status == 200) {
-                set({message: 'Update Book Category Success'})
+                set({message: 'Update Product Category Success'})
             }
         } catch (e) {
             handleError(set, e)
@@ -96,14 +99,14 @@ export const bookCategoryStore = create<BookCategoryState>((set, get) => ({
             set({loadingCrud:false})
         }
     },
-    deleteBookCategory: async (id:string) => {
+    deleteProductCategory: async (id:string) => {
         try {
             set({loadingCrud:true})
-            const res = await AxiosInstance.delete(`/api/book-category/${id}`)
-            await get().getBookCategory()
+            const res = await AxiosInstance.delete(`/api/product-category/${id}`)
+            await get().getProductCategory()
             set({status: res.status})
             if (res.status == 200) {
-                set({message: 'Delete Book Category Success'})
+                set({message: 'Delete Product Category Success'})
             }
         } catch (e) {
             handleError(set, e)

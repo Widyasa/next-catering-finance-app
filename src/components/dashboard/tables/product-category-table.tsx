@@ -1,35 +1,35 @@
 "use client";
 
-import { bookCategoryStore } from "@/stores/bookCategoryStore";
+import { productCategoryStore } from "@/stores/productCategoryStore";
 import {useEffect, useState} from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Searchbar from "@/components/dashboard/searchbar";
 import {PaginationWithLinks} from "@/components/ui/pagination-with-link";
 import {useSearchParams} from "next/navigation";
 import {Button} from "@/components/ui/button";
-import BookCategoryDialog from "@/components/dashboard/dialogs/book-category-dialog";
+import ProductCategoryDialog from "@/components/dashboard/dialogs/product-category-dialog";
 import {toast} from "sonner";
 
 
-export default function BookCategoryTable() {
+export default function ProductCategoryTable() {
     const params = useSearchParams()
-    const { categories, loading, getBookCategory, status, changeStatus, totalData, getBookCategoryById, message } = bookCategoryStore();
+    const { categories, loading, getProductCategory, status, changeStatus, totalData, getProductCategoryById, message, error } = productCategoryStore();
     const currentPage = parseInt((params.get('page') as string) || '1');
     const [open, setOpen] = useState(false)
     const [type, setType] = useState('')
     useEffect(() => {
-        getBookCategory('', currentPage);
+        getProductCategory('', currentPage);
         if (status === 200) {
             setOpen(false)
             changeStatus(0)
             toast(message)
         }
-    }, [changeStatus, currentPage, getBookCategory, message, status]);
+    }, [changeStatus, currentPage, getProductCategory, message, status, error]);
     const handleChange = (e:string) => {
         if (e) {
-            getBookCategory(e)
+            getProductCategory(e)
         } else {
-            getBookCategory()
+            getProductCategory()
         }
     }
     const modalHandler = (type:string) => {
@@ -38,7 +38,7 @@ export default function BookCategoryTable() {
     }
     const getDetailHandler = (type: string, id: string) => {
         modalHandler(type)
-        getBookCategoryById(id)
+        getProductCategoryById(id)
     }
     
     return (
@@ -86,7 +86,7 @@ export default function BookCategoryTable() {
                 pageSize={7}
                 page={currentPage}
             />
-            <BookCategoryDialog
+            <ProductCategoryDialog
                 open={open}
                 setOpen={setOpen}
                 type={type}

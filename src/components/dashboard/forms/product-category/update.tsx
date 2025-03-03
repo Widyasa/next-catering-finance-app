@@ -5,14 +5,14 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-import {bookCategoryStore} from "@/stores/bookCategoryStore";
+import {productCategoryStore} from "@/stores/productCategoryStore";
 import {useEffect, useState} from "react";
-import {updateBookCategorySchema} from "@/requests/book-category/update";
+import {updateProductCategorySchema} from "@/requests/product-category/update";
 
-export default function UpdateBookCategory() {
-    const {loadingCrud, loadingDetail, updateBookCategory, category} = bookCategoryStore()
-    const form = useForm<z.infer<typeof updateBookCategorySchema>>({
-        resolver: zodResolver(updateBookCategorySchema),
+export default function UpdateProductCategory() {
+    const {loadingCrud, loadingDetail, updateProductCategory, category} = productCategoryStore()
+    const form = useForm<z.infer<typeof updateProductCategorySchema>>({
+        resolver: zodResolver(updateProductCategorySchema),
         defaultValues: {
             name: ''
         }
@@ -22,8 +22,8 @@ export default function UpdateBookCategory() {
         form.setValue("name", category.name)
         setId(category.id!)
     }, [category, form]);
-    const submitHandler = (values: z.infer<typeof updateBookCategorySchema>) => {
-        updateBookCategory(id, values)
+    const submitHandler = (values: z.infer<typeof updateProductCategorySchema>) => {
+        updateProductCategory(id, values)
     }
     return (
         <>
