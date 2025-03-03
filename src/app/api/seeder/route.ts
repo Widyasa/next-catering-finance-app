@@ -2,6 +2,13 @@ import prisma from "@/lib/db";
 
 export async function GET() {
     try {
+        await prisma.users.create({
+            data: {
+                email: 'admin@gmail.com',
+                password: '12345678',
+                name: 'admin',
+            }
+        })
         await prisma.productCategories.createMany({
             data: [
                 {name: "catering"},
@@ -32,6 +39,7 @@ export async function GET() {
         await prisma.orders.create({
             data: {
                 date: '2025-03-15',
+                code: `TRX-${new Date().getTime()}`,
                 customer_phone: '08123456789',
                 customer_name: 'budi saputra',
                 customer_address: 'jl. raya no 1',

@@ -53,6 +53,7 @@ enum OrderStatus {
 
 model Orders {
   id               String        @id @default(uuid())
+  code             String        @unique
   date             String
   customer_name    String
   customer_phone   String
