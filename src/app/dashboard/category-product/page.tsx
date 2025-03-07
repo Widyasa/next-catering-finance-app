@@ -1,7 +1,7 @@
 import Head from "next/head";
 import ProductCategoryTable from "@/components/dashboard/tables/product-category-table";
 
-export default function BookCategory(){
+export default function ProductCategory(){
 
     return (
         <>

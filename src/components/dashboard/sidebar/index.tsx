@@ -1,12 +1,12 @@
 'use client'
 import SidebarNav from "@/components/dashboard/sidebar/nav";
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
-import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
 const links = [
     { title: 'Dashboard', route: '/dashboard', icon:<DashboardOutlinedIcon/>},
-    { title: 'Product Category', route: '/dashboard/product-category', active: '/dashboard/product-category', icon:<CategoryOutlinedIcon/>},
-    { title: 'Books', route: '/dashboard/books', active: '/dashboard/books',icon: <BookOutlinedIcon/>},
+    { title: 'Product Category', route: '/dashboard/category-product', active: '/dashboard/category-product', icon:<CategoryOutlinedIcon/>},
+    { title: 'Products', route: '/dashboard/product', active: '/dashboard/product',icon: <FastfoodIcon/>},
 ]
 export default function Sidebar(){
     return (

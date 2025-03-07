@@ -1,12 +1,12 @@
-import {createCategory, getCategories} from "@/services/productCategory";
 import { Prisma } from "@prisma/client";
 import {NextRequest, NextResponse} from "next/server";
+import {createProduct, getProduct} from "@/services/product";
 export async function GET (req:NextRequest) {
     try {
         const {searchParams} = req.nextUrl
         const search = searchParams.get('search')
         const page = searchParams.get('page')!
-        const categories = await getCategories({search, page})
+        const categories = await getProduct({search, page})
         return NextResponse.json(categories)
     } catch (e) {
         if (e instanceof Error) {
@@ -21,7 +21,7 @@ export async function GET (req:NextRequest) {
 export async function POST (req:NextRequest) {
     const request = await req.json()
     try {
-        const category = await createCategory(request.data)
+        const category = await createProduct(request.data)
         return NextResponse.json(category)
     } catch (e) {
         if (e instanceof Error) {
