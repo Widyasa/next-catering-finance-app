@@ -1,9 +1,12 @@
+import {ProductCategory} from "@/types/ProductCategory";
+
 export type Product = {
     id?: string
     name: string
     price: number
     category_id: string
     description: string
+    category:ProductCategory
 }
 export type ProductState = {
     products: Product[]
