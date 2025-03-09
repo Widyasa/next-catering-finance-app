@@ -6,7 +6,7 @@ export default function ProductCategory(){
     return (
         <>
             <Head>
-                <title>tes page title</title>
+                <title>Product Category Page</title>
             </Head>
             <div className="p-8 pb-5 bg-white rounded-xl">
                 <ProductCategoryTable />
