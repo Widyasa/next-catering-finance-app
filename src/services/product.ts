@@ -14,6 +14,9 @@ export const getProduct = async (request: { search: string | null; page: string 
                     contains: request.search || undefined,
                     mode: 'insensitive'
                 }
+            },
+            include: {
+                category:true
             }
         },
         {page: request.page}
