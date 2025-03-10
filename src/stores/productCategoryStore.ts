@@ -3,6 +3,8 @@ import {ProductCategory, ProductCategoryAction, ProductCategoryState} from "@/ty
 import {AxiosInstance} from "@/utils/axios";
 import {ClientError} from "@/types/global";
 import {toast} from "sonner";
+import {supabase, supabaseClient} from "@/utils/supabase/client";
+import {createClientComponentClient} from "@supabase/auth-helpers-nextjs";
 type SetState = (state: Partial<ProductCategoryState>) => void;
 
 const handleError = (set: SetState, error:unknown) => {
@@ -32,11 +34,14 @@ export const productCategoryStore = create<ProductCategoryState & ProductCategor
                 page: pageSelected || 1
             })
             const {search, page} = get()
-            const params = { page, ...(search && { search }) };
-            const res = await AxiosInstance.get(`/api/product-category`, { params });
+            const {data, count} = await supabase
+                .from("ProductCategories")
+                .select('*', {count:'exact'})
+                .range((page - 1)*7 , page * 7 - 1)
+                .like('name', `%${search}%`)
             set({
-                categories: res.data.data,
-                totalData: res.data.meta.total
+                categories: data ?? [],
+                totalData: count ?? 0
             })
         } catch (e) {
             handleError(set, e)
@@ -60,18 +65,16 @@ export const productCategoryStore = create<ProductCategoryState & ProductCategor
             set({loadingDetail:false})
         }
     },
-    createProductCategory: async (data:ProductCategory) => {
+    createProductCategory: async (req:ProductCategory) => {
         try {
             set({loadingCrud:true})
-            const res = await AxiosInstance.post(`/api/product-category`, {
-                data : {
-                    ...data
-                }
-            })
-            console.log(res)
+            const {status} = await supabaseClient
+                .from('ProductCategories')
+                .insert({...req})
+                .single()
             await get().getProductCategory()
-            set({status: res.status})
-            if (res.status == 200) {
+            set({status: status})
+            if (status == 201) {
                 set({message: 'Create Product Category Success'})
             }
         } catch (e) {

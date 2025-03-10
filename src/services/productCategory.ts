@@ -5,7 +5,6 @@ import {Prisma} from "@prisma/client";
 
 export const getCategories = async (request: { search: string | null; page: string }) => {
     const paginate = createPaginator({ perPage: 7 });
-
     return await paginate<ProductCategory, Prisma.ProductCategoriesFindManyArgs>(
         prisma.productCategories,
         {

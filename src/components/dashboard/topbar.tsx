@@ -1,8 +1,11 @@
 'use client'
-import {usePathname} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
+import {Button} from "@/components/ui/button";
+import {supabase} from "@/utils/supabase/client";
 
 export default function Topbar(){
     const pathName = usePathname()
+    const router = useRouter()
     const formatPathName = (path: string) => {
         const segments = path.replace("/dashboard", "").split("/").filter(Boolean);
         return segments.length > 0
@@ -15,6 +18,10 @@ export default function Topbar(){
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(" ");
     };
+    const handleSignOut = async () => {
+        const {error} = await supabase.auth.signOut()
+        router.refresh()
+    }
     return(
         <>
             <div className="flex justify-between items-center p-8 bg-white border-b">
@@ -22,7 +29,7 @@ export default function Topbar(){
                     <div className="ml-4">{formatPathName(pathName)} Page</div>
                 </div>
                 <div className="flex items-center">
-                    <div className="mr-4">Profile</div>
+                    <Button onClick={handleSignOut}>Logout</Button>
                 </div>
             </div>
         </>

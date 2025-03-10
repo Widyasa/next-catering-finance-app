@@ -1,5 +1,5 @@
 'use client'
-import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog";
+import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from "@/components/ui/dialog";
 import DeleteProductCategory from "@/components/dashboard/forms/product-category/delete";
 import CreateProductCategory from "@/components/dashboard/forms/product-category/create";
 import UpdateProductCategory from "@/components/dashboard/forms/product-category/update";
@@ -16,6 +16,7 @@ export default function ProductCategoryDialog(props:BookCategoryDialogProps) {
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className={'capitalize'}>{props.type} Product Category</DialogTitle>
+                        <DialogDescription aria-describedby={undefined} />
                     </DialogHeader>
                     {
                         props.type === 'delete' ?

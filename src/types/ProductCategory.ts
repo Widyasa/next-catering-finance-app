@@ -20,6 +20,7 @@ export type ProductCategoryState = {
 export type ProductCategoryAction = {
     changeStatus: (status: number) => void
     getProductCategory: (search?:string, page?:number) => void
+    getProductCategorySupabase?: (search?:string, page?:number) => void
     getProductCategoryById: (id: string) => void
     createProductCategory: (data:ProductCategory) => void
     updateProductCategory: (id: string, data:ProductCategory) => void

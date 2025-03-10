@@ -19,7 +19,7 @@ export default function ProductCategoryTable() {
     const [type, setType] = useState('')
     useEffect(() => {
         getProductCategory('', currentPage);
-        if (status === 200) {
+        if (status === 201) {
             setOpen(false)
             changeStatus(0)
             toast(message)
