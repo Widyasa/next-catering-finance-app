@@ -58,15 +58,15 @@ export default function ProductTable() {
                     </TableHeader>
                     <TableBody>
                         {loading ? (
-                            <TableRow>
+                            <TableRow key={'loading'}>
                                 <TableCell>Loading...</TableCell>
                             </TableRow>
                         ) : (
-                            products.map(({id, name, price, category}) => (
-                                <TableRow key={id}>
-                                    <TableCell>{name}</TableCell>
+                            products.map(({id, product_name, price, category_name}, index) => (
+                                <TableRow key={id || index}>
+                                    <TableCell>{product_name}</TableCell>
                                     <TableCell>{price}</TableCell>
-                                    <TableCell>{category.name}</TableCell>
+                                    <TableCell>{category_name}</TableCell>
                                     <TableCell className={'flex gap-3'}>
                                         <Button>
                                             Detail

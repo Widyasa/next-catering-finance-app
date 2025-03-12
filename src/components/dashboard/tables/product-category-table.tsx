@@ -19,7 +19,7 @@ export default function ProductCategoryTable() {
     const [type, setType] = useState('')
     useEffect(() => {
         getProductCategory('', currentPage);
-        if (status === 201 || status === 200) {
+        if (status === 201 || status === 204) {
             setOpen(false)
             changeStatus(0)
             toast(message)
@@ -57,12 +57,12 @@ export default function ProductCategoryTable() {
                     </TableHeader>
                     <TableBody>
                         {loading ? (
-                            <TableRow>
+                            <TableRow key={'loading'}>
                                 <TableCell>Loading...</TableCell>
                             </TableRow>
                         ) : (
-                            categories.map(({id, name}) => (
-                                <TableRow key={id}>
+                            categories.map(({id, name}, index) => (
+                                <TableRow key={id || index}>
                                     <TableCell>{name}</TableCell>
                                     <TableCell className={'flex gap-3'}>
                                         <Button onClick={() => getDetailHandler('detail', id!)}>
