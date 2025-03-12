@@ -4,7 +4,6 @@ import {AxiosInstance} from "@/utils/axios";
 import {ClientError} from "@/types/global";
 import {toast} from "sonner";
 import {supabase, supabaseClient} from "@/utils/supabase/client";
-import {createClientComponentClient} from "@supabase/auth-helpers-nextjs";
 type SetState = (state: Partial<ProductCategoryState>) => void;
 
 const handleError = (set: SetState, error:unknown) => {
@@ -57,8 +56,13 @@ export const productCategoryStore = create<ProductCategoryState & ProductCategor
     getProductCategoryById: async (id:string) => {
         try {
             set({loadingDetail:true})
-            const res = await AxiosInstance.get(`/api/product-category/${id}`)
-            set({category: res.data})
+            const {data} = await supabaseClient
+                .from('ProductCategories')
+                .select()
+                .eq('id', id)
+            if (data) {
+                set({category: data[0] ?? {}})
+            }
         } catch (e) {
             handleError(set, e)
         } finally {
