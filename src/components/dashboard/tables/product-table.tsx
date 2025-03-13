@@ -6,26 +6,29 @@ import Searchbar from "@/components/dashboard/searchbar";
 import {PaginationWithLinks} from "@/components/ui/pagination-with-link";
 import {useSearchParams} from "next/navigation";
 import {Button} from "@/components/ui/button";
-import ProductCategoryDialog from "@/components/dashboard/dialogs/product-category-dialog";
-import {toast} from "sonner";
 import {productStore} from "@/stores/productStore";
 import Link from "next/link";
+import {formatRupiah} from "@/utils/currency";
+import ProductDialog from "@/components/dashboard/dialogs/product-dialog";
 
 
 export default function ProductTable() {
     const params = useSearchParams()
-    const { products, loading, getProduct, status, changeStatus, totalData, message, error } = productStore();
+    const { products, loading, getProduct, status, changeStatus, totalData,getProductById } = productStore();
     const currentPage = parseInt((params.get('page') as string) || '1');
+    const [prevPage, setPrevPage] = useState(currentPage)
     const [open, setOpen] = useState(false)
     const [type, setType] = useState('')
     useEffect(() => {
-        getProduct('', currentPage);
-        if (status === 200) {
+        if (products.length === 0 || (currentPage !== prevPage)) {
+            getProduct('', currentPage);
+        }
+        setPrevPage(currentPage)
+        if (status === 201 || status === 204) {
             setOpen(false)
             changeStatus(0)
-            toast(message)
         }
-    }, [changeStatus, currentPage, getProduct, message, status, error]);
+    }, [changeStatus, currentPage, getProduct, prevPage, products.length, status]);
     const handleChange = (e:string) => {
         if (e) {
             getProduct(e)
@@ -33,9 +36,10 @@ export default function ProductTable() {
             getProduct()
         }
     }
-    const modalHandler = (type:string) => {
+    const modalHandler = (type:string, id:string) => {
         setOpen(true)
         setType(type)
+        getProductById(id)
     }
 
     return (
@@ -62,19 +66,23 @@ export default function ProductTable() {
                                 <TableCell>Loading...</TableCell>
                             </TableRow>
                         ) : (
-                            products.map(({id, product_name, price, category_name}, index) => (
-                                <TableRow key={id || index}>
+                            products.map(({product_id, product_name, price, category_name}, index) => (
+                                <TableRow key={product_id || index}>
                                     <TableCell>{product_name}</TableCell>
-                                    <TableCell>{price}</TableCell>
+                                    <TableCell>{formatRupiah(price)}</TableCell>
                                     <TableCell>{category_name}</TableCell>
                                     <TableCell className={'flex gap-3'}>
-                                        <Button>
-                                            Detail
-                                        </Button>
-                                        <Button>
-                                            Update
-                                        </Button>
-                                        <Button onClick={() => modalHandler('create')}>
+                                        <Link href={`/dashboard/product/${product_id}`}>
+                                            <Button>
+                                                Detail
+                                            </Button>
+                                        </Link>
+                                        <Link href={`/dashboard/product/${product_id}/update`}>
+                                            <Button>
+                                                Update
+                                            </Button>
+                                        </Link>
+                                        <Button onClick={() => modalHandler('delete', product_id!)}>
                                             Delete
                                         </Button>
                                     </TableCell>
@@ -89,7 +97,7 @@ export default function ProductTable() {
                 pageSize={7}
                 page={currentPage}
             />
-            <ProductCategoryDialog
+            <ProductDialog
                 open={open}
                 setOpen={setOpen}
                 type={type}

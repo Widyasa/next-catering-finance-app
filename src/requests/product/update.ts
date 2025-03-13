@@ -5,7 +5,7 @@ export const updateProductSchema = z.object({
     }).nonempty({
         message: 'name is required'
     }),
-    price: z.number().min(1, {
+    price: z.coerce.number().min(1, {
         message: "product price cannot be null"
     }),
     description: z.string().min(3, {

@@ -6,6 +6,7 @@ export type Product = {
     product_name?: string
     price: number
     category_id?: string
+    product_id?: string
     description: string
     category_name?: string
     category?:ProductCategory
