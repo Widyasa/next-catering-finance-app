@@ -4,12 +4,12 @@ import DeleteProductCategory from "@/components/dashboard/forms/product-category
 import CreateProductCategory from "@/components/dashboard/forms/product-category/create";
 import UpdateProductCategory from "@/components/dashboard/forms/product-category/update";
 import DetailProductCategory from "@/components/dashboard/forms/product-category/detail";
-interface BookCategoryDialogProps {
+interface ProductCategoryDialogProps {
     open: boolean
     setOpen: (value: boolean) => void
     type: string
 }
-export default function ProductCategoryDialog(props:BookCategoryDialogProps) {
+export default function ProductCategoryDialog(props:ProductCategoryDialogProps) {
     return (
         <>
             <Dialog open={props.open} onOpenChange={props.setOpen}>

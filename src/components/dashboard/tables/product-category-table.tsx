@@ -8,23 +8,25 @@ import {PaginationWithLinks} from "@/components/ui/pagination-with-link";
 import {useSearchParams} from "next/navigation";
 import {Button} from "@/components/ui/button";
 import ProductCategoryDialog from "@/components/dashboard/dialogs/product-category-dialog";
-import {toast} from "sonner";
 
 
 export default function ProductCategoryTable() {
     const params = useSearchParams()
     const { categories, loading, getProductCategory, status, changeStatus, totalData, getProductCategoryById, message, error } = productCategoryStore();
     const currentPage = parseInt((params.get('page') as string) || '1');
+    const [prevPage, setPrevPage] = useState(currentPage)
     const [open, setOpen] = useState(false)
     const [type, setType] = useState('')
     useEffect(() => {
-        getProductCategory('', currentPage);
+        if (categories.length === 0 || (currentPage !== prevPage)) {
+            getProductCategory('', currentPage);
+        }
+        setPrevPage(currentPage)
         if (status === 201 || status === 204) {
             setOpen(false)
             changeStatus(0)
-            toast(message)
         }
-    }, [changeStatus, currentPage, getProductCategory, message, status, error]);
+    }, [changeStatus, currentPage, getProductCategory, message, status, error, categories.length, prevPage]);
     const handleChange = (e:string) => {
         if (e) {
             getProductCategory(e)

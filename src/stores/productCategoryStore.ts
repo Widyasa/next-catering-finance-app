@@ -54,13 +54,14 @@ export const productCategoryStore = create<ProductCategoryState & ProductCategor
         const {status, error} = await supabaseClient
             .from('ProductCategories')
             .insert({...req})
-        get().getProductCategory()
+        await get().getProductCategory()
         set({status: status})
         if (status == 201) {
             set({message: 'Create Product Category Success'})
+            toast.success(get().message)
         }
         if (error?.code == '23505') {
-            toast('Category is Already Exists')
+            toast.warning('Category is Already Exists')
         }
         set({loadingCrud:false})
     },
@@ -70,13 +71,14 @@ export const productCategoryStore = create<ProductCategoryState & ProductCategor
             .from('ProductCategories')
             .update({...req})
             .eq('id', id)
-        get().getProductCategory()
+        await get().getProductCategory()
         set({status: status})
         if (status == 204) {
             set({message: 'Update Product Category Success'})
+            toast.success(get().message)
         }
         if (error?.code == '23505') {
-            toast('Category is Already Exists')
+            toast.warning('Category is Already Exists')
         }
         set({loadingCrud:false})
     },
@@ -90,6 +92,7 @@ export const productCategoryStore = create<ProductCategoryState & ProductCategor
         set({status: status})
         if (status == 204) {
             set({message: 'Delete Product Category Success'})
+            toast.success(get().message)
         }
         set({loadingCrud:false})
     }
