@@ -4,7 +4,6 @@ import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
 import {productStore} from "@/stores/productStore";
 import {Textarea} from "@/components/ui/textarea";
 import CurrencyInput from "react-currency-input-field";
@@ -14,7 +13,7 @@ import {detailProductSchema} from "@/requests/product/detail";
 
 export default function DetailProductForm() {
     const {id} = useParams() as {id:string}
-    const {loadingCrud, getProductById, loadingDetail} = productStore()
+    const {getProductById, loadingDetail} = productStore()
     const form = useForm<z.infer<typeof detailProductSchema>>({
         resolver: zodResolver(detailProductSchema),
     })

@@ -1,5 +1,5 @@
 import {create} from "zustand/react";
-import {Order, OrderState, OrderAction} from "@/types/Order";
+import {Order, OrderState, OrderAction, CrudOrder} from "@/types/Order";
 import {supabase, supabaseClient} from "@/utils/supabase/client";
 import {toast} from "sonner";
 import {redirect} from "next/navigation";
@@ -45,12 +45,12 @@ export const orderStore = create<OrderState & OrderAction>((set, get) => ({
         })
         const {search, page} = get()
         const {data, count} = await supabase
-            .from("orderstatus")
+            .from("order_summary")
             .select('*', {count:'exact'})
             .range((page - 1)*7 , page * 7 - 1)
             .like('date', `%${search}%`)
             .like('customer_name', `%${search}%`)
-            .like('status', `%${search}%`)
+            // .like('status', `%${search}%`)
         set({
             orders: data ?? [],
             totalData: count ?? 0
@@ -64,7 +64,7 @@ export const orderStore = create<OrderState & OrderAction>((set, get) => ({
     getOrderById: async (id:string) => {
         set({loadingDetail:true})
         const {data} = await supabaseClient
-            .from('orderstatus')
+            .from('order_summary')
             .select()
             .eq('order_id', id)
         if (data) {
@@ -72,7 +72,7 @@ export const orderStore = create<OrderState & OrderAction>((set, get) => ({
             set({loadingDetail:false})
         }
     },
-    createOrder: async (req:Order) => {
+    createOrder: async (req:CrudOrder) => {
         set({loadingCrud:true})
         const {status, error} = await supabaseClient
             .rpc('create_order', {
@@ -93,7 +93,7 @@ export const orderStore = create<OrderState & OrderAction>((set, get) => ({
             console.log(error)
         }
     },
-    updateOrder: async (id:string, req:Order) => {
+    updateOrder: async (id:string, req:CrudOrder) => {
         set({loadingCrud:true})
         const {status, error} = await supabaseClient
             .rpc('update_order', {

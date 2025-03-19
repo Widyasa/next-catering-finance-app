@@ -45,7 +45,7 @@ export default function OrderTable() {
         <>
             <div className="mt-5 mb-3 flex w-full gap-3">
                 <Searchbar handleChange={handleChange}/>
-                <Link href={'/dashboard/product/create'}>
+                <Link href={'/dashboard/order/create'}>
                     <Button>Add New</Button>
                 </Link>
             </div>
@@ -53,9 +53,10 @@ export default function OrderTable() {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[300px]">Name</TableHead>
-                            <TableHead className="">Price</TableHead>
-                            <TableHead className="">Category</TableHead>
+                            <TableHead className="">Date</TableHead>
+                            <TableHead className="">Total Price</TableHead>
+                            <TableHead className="">Customer Name</TableHead>
+                            <TableHead className="">Status</TableHead>
                             <TableHead>Action</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -65,12 +66,12 @@ export default function OrderTable() {
                                 <TableCell>Loading...</TableCell>
                             </TableRow>
                         ) : (
-                            orders.map(({date, order_id, total_price, total_income, total_outcome}, index) => (
+                            orders.map(({date, order_id, total_price, customer_name, status}, index) => (
                                 <TableRow key={order_id || index}>
                                     <TableCell>{date}</TableCell>
                                     <TableCell>{formatRupiah(total_price)}</TableCell>
-                                    <TableCell>{formatRupiah(total_income)}</TableCell>
-                                    <TableCell>{formatRupiah(typeof total_outcome === "number" ? total_outcome : 0)}</TableCell>
+                                    <TableCell>{customer_name}</TableCell>
+                                    <TableCell>{status}</TableCell>
                                     <TableCell className={'flex gap-3'}>
                                         <Link href={`/dashboard/order/${order_id}`}>
                                             <Button>

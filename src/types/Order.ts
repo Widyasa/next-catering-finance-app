@@ -44,7 +44,25 @@ export type OrderAction = {
     changeStatus: (status: number) => void
     getOrder: (search?:string, page?:number) => void
     getOrderById: (id: string) => void
-    createOrder: (data:Order) => void
-    updateOrder: (id: string, data:Order) => void
+    createOrder: (data:CrudOrder) => void
+    updateOrder: (id: string, data:CrudOrder) => void
     deleteOrder: (id: string) => void
+}
+export type CrudOrder = {
+    p_date: string,
+    p_customer_name: string,
+    p_customer_phone: string,
+    p_customer_address: string,
+    p_status: string,
+    p_code: string,
+    p_order_details: {
+        product_id: string
+        quantity: number
+        price: number
+    }[],
+    p_order_outcomes:{
+        name:string
+        description:string
+        price:number
+    }[]
 }
