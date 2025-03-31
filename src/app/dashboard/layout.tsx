@@ -14,11 +14,11 @@ export default async function RootLayout({children,}: Readonly<{
 }>) {
     return (
         <>
-            <div className="grid grid-cols-12 min-h-screen h-full bg-[#F4F5FA]">
-                <div className="col-span-3 h-full">
+            <div className="flex bg-[#F4F5FA]">
+                <div className="max-w-[300px] w-full">
                     <Sidebar />
                 </div>
-                <div className="col-span-9">
+                <div className="w-full">
                     <Topbar />
                     <div className="section mt-10">
                         {children}

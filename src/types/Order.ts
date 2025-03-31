@@ -3,6 +3,8 @@ export type Order = {
     order_id: string
     date: string
     customer_name: string
+    customer_phone: string
+    customer_address: string
     total_price: number
     total_outcome?: number
     total_income: number

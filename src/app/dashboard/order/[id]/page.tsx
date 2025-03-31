@@ -1,17 +1,17 @@
-import CreateProductForm from "@/components/dashboard/forms/product/create";
+'use client'
 import Head from "next/head";
-import { productStore } from "@/stores/productStore";
+import DetailOrderForm from "@/components/dashboard/forms/order/detail";
 
-export default function CreateOrderPage() {
-    const {getProduct} = productStore()
-    getProduct()
+export default function DetailOrderPage() {
+    // const {getProduct} = productStore()
+    // getProduct()
     return (
         <>
             <Head>
-                <title>Create Product Page</title>
+                <title>Detail Order Page</title>
             </Head>
             <div className="p-8 pb-5 bg-white rounded-xl">
-                <CreateProductForm />
+                <DetailOrderForm />
             </div>
         </>
     )

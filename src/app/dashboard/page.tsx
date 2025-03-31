@@ -15,11 +15,62 @@ export default function Dashboard() {
             <div className="w-full flex justify-center items-center h-full">
                 {/*<p className="">INI DASHBOARD</p>*/}
                 {/*<Button onClick={handleClick}>seed</Button>*/}
-                <div className="bg-white size-[200px] rounded">
-                    <div className="flex justify-center items-center flex-col h-full">
-                        <div className="size-20 bg-black rounded-full"></div>
-                        <p className="text-center">nasi cumi hitam</p>
-                        <div className="size-5 bg-black rounded-full"></div>
+                <div className="flex flex-wrap gap-4 justify-center">
+                    <div className="bg-white w-fit rounded">
+                        <div className="flex justify-center items-center flex-col h-full">
+                            <div className="size-20 bg-black rounded-full"></div>
+                            <p className="text-center">nasi cumi hitam</p>
+                            <div className="size-5 bg-black rounded-full"></div>
+                        </div>
+                    </div>
+                    <div className="bg-white size-[200px] rounded">
+                        <div className="flex justify-center items-center flex-col h-full">
+                            <div className="size-20 bg-black rounded-full"></div>
+                            <p className="text-center">nasi cumi hitam</p>
+                            <div className="size-5 bg-black rounded-full"></div>
+                        </div>
+                    </div>
+                    <div className="bg-white size-[200px] rounded">
+                        <div className="flex justify-center items-center flex-col h-full">
+                            <div className="size-20 bg-black rounded-full"></div>
+                            <p className="text-center">nasi cumi hitam</p>
+                            <div className="size-5 bg-black rounded-full"></div>
+                        </div>
+                    </div>
+                    <div className="bg-white size-[200px] rounded">
+                        <div className="flex justify-center items-center flex-col h-full">
+                            <div className="size-20 bg-black rounded-full"></div>
+                            <p className="text-center">nasi cumi hitam</p>
+                            <div className="size-5 bg-black rounded-full"></div>
+                        </div>
+                    </div>
+                    <div className="bg-white size-[200px] rounded">
+                        <div className="flex justify-center items-center flex-col h-full">
+                            <div className="size-20 bg-black rounded-full"></div>
+                            <p className="text-center">nasi cumi hitam</p>
+                            <div className="size-5 bg-black rounded-full"></div>
+                        </div>
+                    </div>
+                    <div className="bg-white size-[200px] rounded">
+                        <div className="flex justify-center items-center flex-col h-full">
+                            <div className="size-20 bg-black rounded-full"></div>
+                            <p className="text-center">nasi cumi hitam</p>
+                            <div className="size-5 bg-black rounded-full"></div>
+                        </div>
+                    </div>
+                    <div className="bg-white size-[200px] rounded">
+                        <div className="flex justify-center items-center flex-col h-full">
+                            <div className="size-20 bg-black rounded-full"></div>
+                            <p className="text-center">nasi cumi hitam</p>
+                            <div className="size-5 bg-black rounded-full"></div>
+                        </div>
+                    </div>
+                    <div className="bg-white size-[200px] rounded">
+                        <div className="flex justify-center items-center flex-col h-full">
+                            <div className="size-20 bg-black rounded-full"></div>
+                            <p className="text-center">nasi cumi hitam</p>
+                            <div className="size-5 bg-black rounded-full"></div>
+                        </div>
                     </div>
                 </div>
             </div>

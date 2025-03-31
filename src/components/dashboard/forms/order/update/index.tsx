@@ -7,37 +7,50 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import { createOrderSchema } from "@/requests/order/create";
-import {generateRandomString} from "@/utils/randomString";
 import {orderStore} from "@/stores/orderStore";
 import {OrderDetails} from "@/components/dashboard/forms/order/create/detail";
 import {OrderOutcomes} from "@/components/dashboard/forms/order/create/outcomes";
 import {useEffect} from "react";
-export default function CreateOrderForm() {
-    const {loadingCrud, createOrder} = orderStore()
+import {useParams} from "next/navigation";
+export default function UpdateOrderForm() {
+    const {id} = useParams() as {id:string}
+    const {loadingCrud, updateOrder, getOrderById} = orderStore()
     const form = useForm<z.infer<typeof createOrderSchema>>({
         resolver: zodResolver(createOrderSchema),
         defaultValues: {
-                p_date: new Date().toISOString().split("T")[0],
-                p_customer_name: "",
-                p_customer_phone: "",
-                p_customer_address: "",
-                p_status: "",
-                p_code: ``,
-                p_order_details: [{product_id: '', quantity: 0, price: 0}],
-                p_order_outcomes: [{name: '', description: '', price: 0}]
+            p_date: "",
+            p_customer_name: "",
+            p_customer_phone: "",
+            p_customer_address: "",
+            p_status: "",
+            p_code: ``,
+            p_order_details: [{product_id: '', quantity: 0, price: 0}],
+            p_order_outcomes: [{name: '', description: '', price: 0}]
         }
     })
     useEffect(() => {
-        form.setValue("p_code", `TRX-${Date.now()}-${generateRandomString(4)}`);
-    }, [form]);
+        getOrderById(id);
+        const unsub = orderStore.subscribe((state) => {
+            form.reset({
+                p_date: state.order?.date,
+                p_customer_name: state.order?.customer_name,
+                p_customer_phone: state.order?.customer_phone,
+                p_customer_address: state.order?.customer_address,
+                p_status: state.order?.status,
+                p_code: state.order?.code,
+                p_order_details: state.order?.order_details,
+                p_order_outcomes: state.order?.order_outcomes,
+            });
+        });
+        return () => unsub();
+    }, [form, getOrderById, id]);
     const submitHandler = (values: z.infer<typeof createOrderSchema>) => {
-        console.log(values)
-        createOrder(values)
+        updateOrder(id, values)
     }
     return (
         <>
             <div className="flex justify-between items-center">
-                <h2 className="mb-4 text-2xl font-semibold">Create New Order</h2>
+                <h2 className="mb-4 text-2xl font-semibold">Update Order</h2>
                 <p className="font-semibold text-lg">{form.watch("p_code")}</p>
             </div>
             <Form {...form}>
@@ -104,7 +117,7 @@ export default function CreateOrderForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Status</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <Select onValueChange={field.onChange} value={field.value}>
                                     <FormControl>
                                         <SelectTrigger className={"w-full"}>
                                             <SelectValue placeholder="Pilih Status" />

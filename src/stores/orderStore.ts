@@ -1,5 +1,5 @@
 import {create} from "zustand/react";
-import {Order, OrderState, OrderAction, CrudOrder} from "@/types/Order";
+import {OrderState, OrderAction, CrudOrder} from "@/types/Order";
 import {supabase, supabaseClient} from "@/utils/supabase/client";
 import {toast} from "sonner";
 import {redirect} from "next/navigation";
@@ -9,6 +9,8 @@ export const orderStore = create<OrderState & OrderAction>((set, get) => ({
         order_id: "",
         date: "",
         customer_name: "",
+        customer_address:"",
+        customer_phone:"",
         total_price: 0,
         total_income: 0,
         status: "",
@@ -68,6 +70,7 @@ export const orderStore = create<OrderState & OrderAction>((set, get) => ({
             .select()
             .eq('order_id', id)
         if (data) {
+            console.log(data[0])
             set({order: data[0]})
             set({loadingDetail:false})
         }
@@ -82,7 +85,7 @@ export const orderStore = create<OrderState & OrderAction>((set, get) => ({
         set({status: status})
         set({loadingCrud: false})
 
-        if (status == 201) {
+        if (status == 200) {
             set({message: 'Create Order Success'})
             toast.success(get().message)
             redirect('/dashboard/order')
