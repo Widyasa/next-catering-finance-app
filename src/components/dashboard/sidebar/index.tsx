@@ -15,7 +15,7 @@ export default function Sidebar(){
         <>
             <div className="bg-primary min-h-screen h-full ">
                 <div className="px-3 pt-10">
-                    <div className="text-white text-3xl text-center">Logo</div>
+                    <div className="text-white text-3xl text-center">Goals Kitchen</div>
                     <div className="flex flex-col gap-3 mt-6 h-full">
                         {links.map((link, index) => (
                             <SidebarNav key={index} title={link.title} route={link.route} activeRoute={link?.active}>
