@@ -1,25 +1,26 @@
 "use client"
 import {Button} from "@/components/ui/button";
-import {productCategoryStore} from "@/stores/productCategoryStore";
 import {useEffect, useState} from "react";
 import DeleteMessage from "@/components/ui/delete-message";
+import {orderStore} from "@/stores/orderStore";
 
-export default function DeleteProductCategory() {
-    const {loadingCrud, loadingDetail, deleteProductCategory, category} = productCategoryStore()
+export default function DeleteOrderForm() {
+    const {loadingCrud, loadingDetail, deleteOrder, order} = orderStore()
     const [id, setId] = useState<string>('')
     useEffect(() => {
-        setId(category.id!)
-    }, [category]);
-    const submitHandler = (event: React.FormEvent) => {
+        console.log(order)
+        setId(order.order_id!)
+    }, [order]);
+    const submitHandler = async (event: React.FormEvent) => {
         event.preventDefault()
-        deleteProductCategory(id)
+        await deleteOrder(id)
     }
     return (
         <>
             {
                 loadingDetail ? 'Loading content...' :
                     <form onSubmit={submitHandler}>
-                        <DeleteMessage module={'product category'} />
+                        <DeleteMessage module={'order'} />
                         <Button className={'mt-5'} type={'submit'}>
                             {
                                 loadingCrud ? 'processing...' :

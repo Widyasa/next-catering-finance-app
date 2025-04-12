@@ -17,7 +17,7 @@ export default function DeleteProductForm() {
     return (
         <>
             {
-                loadingDetail ? 'Loading fields...' :
+                loadingDetail ? 'Loading content...' :
                     <form onSubmit={submitHandler}>
                         <DeleteMessage module={'product'} />
                         <Button className={'mt-5'} type={'submit'}>

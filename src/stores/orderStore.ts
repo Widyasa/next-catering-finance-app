@@ -70,7 +70,6 @@ export const orderStore = create<OrderState & OrderAction>((set, get) => ({
             .select()
             .eq('order_id', id)
         if (data) {
-            console.log(data[0])
             set({order: data[0]})
             set({loadingDetail:false})
         }

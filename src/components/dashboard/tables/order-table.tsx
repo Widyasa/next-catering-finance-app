@@ -8,8 +8,8 @@ import {useSearchParams} from "next/navigation";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {formatRupiah} from "@/utils/currency";
-import ProductDialog from "@/components/dashboard/dialogs/product-dialog";
 import {orderStore} from "@/stores/orderStore";
+import OrderDialog from "@/components/dashboard/dialogs/order-dialog";
 
 export default function OrderTable() {
     const params = useSearchParams()
@@ -98,7 +98,7 @@ export default function OrderTable() {
                 pageSize={7}
                 page={currentPage}
             />
-            <ProductDialog
+            <OrderDialog
                 open={open}
                 setOpen={setOpen}
                 type={type}
