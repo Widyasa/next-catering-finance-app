@@ -1,3 +1,4 @@
+'use client'
 import Head from "next/head";
 import ProductCategoryTable from "@/components/dashboard/tables/product-category-table";
 

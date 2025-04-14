@@ -1,3 +1,4 @@
+'use client'
 import OrderTable from '../../../components/dashboard/tables/order-table';
 import Head from "next/head";
 
