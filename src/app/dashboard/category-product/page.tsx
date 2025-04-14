@@ -1,6 +1,6 @@
-'use client'
 import Head from "next/head";
 import ProductCategoryTable from "@/components/dashboard/tables/product-category-table";
+import {Suspense} from "react";
 
 export default function ProductCategory(){
 
@@ -10,7 +10,9 @@ export default function ProductCategory(){
                 <title>Product Category Page</title>
             </Head>
             <div className="p-8 pb-5 bg-white rounded-xl">
-                <ProductCategoryTable />
+                <Suspense fallback={<div>Loading.....</div>}>
+                    <ProductCategoryTable />
+                </Suspense>
             </div>
         </>
     )

@@ -1,6 +1,7 @@
-'use client'
+
 import OrderTable from '../../../components/dashboard/tables/order-table';
 import Head from "next/head";
+import {Suspense} from "react";
 
 export default function Order() {
     return (
@@ -9,7 +10,9 @@ export default function Order() {
                 <title>Product Category Page</title>
             </Head>
             <div className="p-8 pb-5 bg-white rounded-xl">
-                <OrderTable />
+                <Suspense fallback={<div>Loading.....</div>}>
+                    <OrderTable />
+                </Suspense>
             </div>
         </>
     )
