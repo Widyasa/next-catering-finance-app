@@ -6,6 +6,7 @@ import { useState } from 'react'
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {Button} from "@/components/ui/button";
+import {toast} from "sonner";
 
 export default function Login() {
     const [email, setEmail] = useState('')
@@ -14,11 +15,16 @@ export default function Login() {
     const supabase = createClientComponentClient()
 
     const handleSignIn = async () => {
-        await supabase.auth.signInWithPassword({
+        const login = await supabase.auth.signInWithPassword({
             email,
             password,
         })
-        router.refresh()
+        if (login.error !== null) {
+            toast.error('Login failed, please check your email and password')
+        } else {
+            toast.success('Login success')
+            router.push('/dashboard')
+        }
     }
 
     // const handleSignOut = async () => {
