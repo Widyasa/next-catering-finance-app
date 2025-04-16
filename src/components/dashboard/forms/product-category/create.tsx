@@ -38,7 +38,7 @@ export default function CreateProductCategory() {
                     />
                     <Button type="submit" className={"mt-5"}>
                         {
-                            loadingCrud ? 'Proces...' : 'Submit'
+                            loadingCrud ? 'Process...' : 'Submit'
                         }
                     </Button>
                 </form>

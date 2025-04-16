@@ -9,7 +9,7 @@ export default function Product() {
                 <title>tes page title</title>
             </Head>
             <div className="p-8 pb-5 bg-white rounded-xl">
-                <Suspense fallback={<div>Loading.....</div>}>
+                <Suspense fallback={<div>Loading Content.....</div>}>
                     <ProductTable />
                 </Suspense>
             </div>

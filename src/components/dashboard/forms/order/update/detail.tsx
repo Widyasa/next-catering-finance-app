@@ -1,7 +1,6 @@
 'use client'
 import { useRef } from "react";
 import { productStore } from "@/stores/productStore";
-import { createOrderSchema } from "@/requests/order/create";
 import { Control, useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -10,9 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import CurrencyInput from "react-currency-input-field";
 import { formatRupiah } from "@/utils/currency";
+import {updateOrderSchema} from "@/requests/order/update";
 
 type OrderDetailProps = {
-    control: Control<z.infer<typeof createOrderSchema>>;
+    control: Control<z.infer<typeof updateOrderSchema>>;
 };
 
 export function UpdateOrderDetails({ control }: OrderDetailProps) {

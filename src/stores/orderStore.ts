@@ -99,7 +99,6 @@ export const orderStore = create<OrderState & OrderAction>((set, get) => ({
         set({loadingCrud:true})
         const {status, error} = await supabaseClient
             .rpc('update_order', {
-                p_order_id: id,
                 ...req
             })
         get().getOrder()

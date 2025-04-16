@@ -8,16 +8,18 @@ import {Button} from "@/components/ui/button";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import { createOrderSchema } from "@/requests/order/create";
 import {orderStore} from "@/stores/orderStore";
-import {OrderDetails} from "@/components/dashboard/forms/order/create/detail";
-import {OrderOutcomes} from "@/components/dashboard/forms/order/create/outcomes";
 import {useEffect} from "react";
 import {useParams} from "next/navigation";
+import {UpdateOrderDetails} from "@/components/dashboard/forms/order/update/detail";
+import {UpdateOrderOutcomes} from "@/components/dashboard/forms/order/update/outcomes";
+import {updateOrderSchema} from "@/requests/order/update";
 export default function UpdateOrderForm() {
     const {id} = useParams() as {id:string}
     const {loadingCrud, updateOrder, getOrderById} = orderStore()
-    const form = useForm<z.infer<typeof createOrderSchema>>({
-        resolver: zodResolver(createOrderSchema),
+    const form = useForm<z.infer<typeof updateOrderSchema>>({
+        resolver: zodResolver(updateOrderSchema),
         defaultValues: {
+            p_order_id: "",
             p_date: "",
             p_customer_name: "",
             p_customer_phone: "",
@@ -32,6 +34,7 @@ export default function UpdateOrderForm() {
         getOrderById(id);
         const unsub = orderStore.subscribe((state) => {
             form.reset({
+                p_order_id: id,
                 p_date: state.order?.date,
                 p_customer_name: state.order?.customer_name,
                 p_customer_phone: state.order?.customer_phone,
@@ -135,8 +138,8 @@ export default function UpdateOrderForm() {
                         )}
                     />
 
-                    <OrderDetails control={form.control} />
-                    <OrderOutcomes control={form.control} />
+                    <UpdateOrderDetails control={form.control} />
+                    <UpdateOrderOutcomes control={form.control} />
 
                     <Button type="submit" className={"mt-5"}>
                         {

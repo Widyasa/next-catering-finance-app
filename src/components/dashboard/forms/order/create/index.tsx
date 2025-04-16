@@ -31,7 +31,6 @@ export default function CreateOrderForm() {
         form.setValue("p_code", `TRX-${Date.now()}-${generateRandomString(4)}`);
     }, [form]);
     const submitHandler = (values: z.infer<typeof createOrderSchema>) => {
-        console.log(values)
         createOrder(values)
     }
     return (

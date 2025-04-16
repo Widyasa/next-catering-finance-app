@@ -8,7 +8,6 @@ export default function DeleteOrderForm() {
     const {loadingCrud, loadingDetail, deleteOrder, order} = orderStore()
     const [id, setId] = useState<string>('')
     useEffect(() => {
-        console.log(order)
         setId(order.order_id!)
     }, [order]);
     const submitHandler = async (event: React.FormEvent) => {

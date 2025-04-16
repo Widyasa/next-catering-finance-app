@@ -13,7 +13,7 @@ export default function DetailProductCategory() {
     const form = useForm<z.infer<typeof createProductCategorySchema>>({
         resolver: zodResolver(createProductCategorySchema),
         defaultValues: {
-            name: category.name
+            name: ''
         }
     })
     useEffect(() => {

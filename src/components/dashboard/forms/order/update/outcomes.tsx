@@ -5,10 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import CurrencyInput from "react-currency-input-field";
 import {z} from "zod";
-import {createOrderSchema} from "@/requests/order/create";
+import {updateOrderSchema} from "@/requests/order/update";
 
 type OutcomeDetailProps = {
-    control: Control<z.infer<typeof createOrderSchema>>;
+    control: Control<z.infer<typeof updateOrderSchema>>;
 };
 
 export function UpdateOrderOutcomes({ control }: OutcomeDetailProps) {

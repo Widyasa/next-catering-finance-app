@@ -10,7 +10,7 @@ export default function ProductCategory(){
                 <title>Product Category Page</title>
             </Head>
             <div className="p-8 pb-5 bg-white rounded-xl">
-                <Suspense fallback={<div>Loading.....</div>}>
+                <Suspense fallback={<div>Loading Content.....</div>}>
                     <ProductCategoryTable />
                 </Suspense>
             </div>
